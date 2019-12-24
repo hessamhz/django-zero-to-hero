@@ -5,6 +5,12 @@
     <title>Title</title>
 </head>
 <body>
-    {{ posts.title }}
+    {% for post in posts %}
+    <p>
+       <h3> Title: {{post.title}}</h3>
+        <h5> Text: {{post.text}}</h5>
+    <!-- {{item.key}}: {{item.value}} -->
+    </p>
+    {% endfor %}
 </body>
 </html>

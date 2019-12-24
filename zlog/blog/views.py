@@ -4,5 +4,5 @@ from .models import BlogPost
 
 
 def blog_view(request):
-    queryset = BlogPost.objects.all()
-    return render(request, 'posts.html', context={'posts': queryset[0]})
+    queryset = BlogPost.objects.filter(target_age='E')
+    return render(request, 'posts.html', context={'posts': queryset})
