@@ -6,13 +6,25 @@
 
 </head>
 <body>
-    <form method="post" action="{% url 'login_view' %}">
-        {% csrf_token %}
-        <label>Username</label>
-        <input type="text" value="enter your username" name="username">
-        <label>Password</label>
-        <input type="password" value="something" name="password">
-        <button type="submit"> Login here! </button>
-    </form>
-</body>
+    {% if not user.is_authenticated %}
+    <div>
+        <form method="post" action="{% url 'login_view' %}">
+            {% csrf_token %}
+            <label>Username: </label>
+            <input type="text" value="Username" name="username"><br>
+            <label>Password: </label>
+            <input type="password" value="something" name="password"><br>
+            <button type="submit"> Login here! </button><br>
+        </form>
+    </div>
+    {% else %}
+    <div>
+        <form method="post" action="{% url 'logout_view' %}">
+            {% csrf_token %}
+            <label>Welcome user {{user.username}}</label>
+            <button type="submit">Please Log me OUT</button>
+        </form>
+    </div>
+    {% endif %}
+    </body>
 </html>

@@ -5,6 +5,7 @@ from django.shortcuts import (
 )
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from .forms import UserRegistrationForm
 # Create your views here.
 
 
@@ -24,3 +25,30 @@ def login_view(request):
         else:
             login(request, user)
             return HttpResponse(request.user.username)
+
+
+def logout_view(request):
+    if request.method == 'POST':
+        logout(request)
+        return HttpResponse('Successfully Logged You Out Sir!')
+    else:
+        return HttpResponse('Invalid Method')
+
+
+def register_view(request):
+    if request.method == 'GET':
+        reg_form = UserRegistrationForm()
+        return render(request, 'register.html', context={'reg_form': reg_form})
+    else:
+        reg_form = UserRegistrationForm(data=request.POST)
+        if reg_form.is_valid():
+            saved_user = reg_form.save()
+            user = authenticate(username=saved_user.username, password=saved_user.password)
+            if user is None:
+                return HttpResponse('invalid Login')
+            else:
+                login(request, user)
+                return HttpResponse(request.user.username)
+
+
+
