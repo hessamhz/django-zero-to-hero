@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+    <form method="post" action="{% url 'login_view' %}">
+        {% csrf_token %}
+        <label>Username</label>
+        <input type="text" value="enter your username" name="username">
+        <label>Password</label>
+        <input type="password" value="something" name="password">
+        <button type="submit"> Login here! </button>
+    </form>
+</body>
+</html>
