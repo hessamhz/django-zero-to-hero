@@ -42,13 +42,16 @@ def register_view(request):
     else:
         reg_form = UserRegistrationForm(data=request.POST)
         if reg_form.is_valid():
-            saved_user = reg_form.save()
-            user = authenticate(username=saved_user.username, password=saved_user.password)
+            reg_form.save()
+            data = reg_form.cleaned_data
+            user = authenticate(username=data['username'], password=data['password'])
             if user is None:
                 return HttpResponse('invalid Login')
             else:
                 login(request, user)
                 return HttpResponse(request.user.username)
+        else:
+            return HttpResponse(str(reg_form.errors))
 
 
 
